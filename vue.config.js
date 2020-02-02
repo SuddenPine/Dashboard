@@ -36,5 +36,6 @@ module.exports = {
         );
     });
   },
-  transpileDependencies: ["vuetify"]
+  transpileDependencies: ["vuetify"],
+  publicPath: "/~sl106/future-home/"
 };

@@ -47,10 +47,7 @@
                 </v-col>
 
                 <v-col cols="12">
-                  <v-textarea
-                    label="About Me"
-                    value="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                  />
+                  <v-textarea label="About Me" value="" />
                 </v-col>
 
                 <v-col cols="12" class="text-right">
@@ -71,27 +68,25 @@
             size="130"
           >
             <img
-              src="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg"
+              src="https://img.icons8.com/cotton/64/000000/administrator-male.png"
             />
           </v-avatar>
           <v-card-text class="text-center">
             <h6 class="overline mb-3">
-              CEO / CO-FOUNDER
+              Freelance Writer
             </h6>
 
             <h4 class="font-weight-light">
-              Alec Thompson
+              SSST
             </h4>
 
             <p class="font-weight-light">
-              Don't be scared of the truth because we need to restart the human
-              foundation in truth And I love you like Kanye loves Kanye I love
-              Rick Owens’ bed design but the back is...
+              The Earth is what we all have in common.
             </p>
 
-            <v-btn color="success">
+            <!-- <v-btn color="success">
               Follow
-            </v-btn>
+            </v-btn> -->
           </v-card-text>
         </material-card>
       </v-col>
