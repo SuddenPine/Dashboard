@@ -16,14 +16,14 @@
     <v-list-item two-line>
       <v-list-item-avatar color="white">
         <v-img
-          src="https://cdn.vuetifyjs.com/images/logos/v.png"
+          src="https://img.icons8.com/cotton/64/000000/administrator-male.png"
           height="34"
           contain
         />
       </v-list-item-avatar>
 
       <v-list-item-title class="title">
-        VUETIFY MD
+        My Future
       </v-list-item-title>
     </v-list-item>
 
