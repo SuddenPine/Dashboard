@@ -15,13 +15,14 @@ export default [
     view: "UserProfile"
   },
   {
-    path: "/table-list",
-    name: "Table List",
-    view: "TableList"
+    path: "/monitor",
+    name: "Monitor",
+    view: "Monitor"
   },
   {
-    path: "/typography",
-    view: "Typography"
+    path: "/league",
+    name: "League",
+    view: "League"
   },
   {
     path: "/icons",

@@ -47,7 +47,7 @@
       </v-card>
     </v-menu>
     <!-- Account button -->
-    <v-btn text style="min-width: 0;">
+    <v-btn text style="min-width: 0;" to="/user-profile">
       <v-icon>
         mdi-account
       </v-icon>
