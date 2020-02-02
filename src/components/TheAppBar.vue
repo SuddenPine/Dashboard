@@ -62,13 +62,7 @@ export default {
   name: "TheAppBar",
   data() {
     return {
-      notifications: [
-        "Mike, John responded to your email",
-        "You have 5 new tasks",
-        "You're now a friend with Andrew",
-        "Another Notification",
-        "Another One"
-      ],
+      notifications: ["Lights have been on in the kitchen for 6 hours"],
       title: this.$route.name,
       responsive: false
     };
