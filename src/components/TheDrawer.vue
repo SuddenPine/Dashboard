@@ -46,20 +46,6 @@
         <v-list-item-title v-text="link.text" />
       </v-list-item>
     </v-list>
-
-    <template v-slot:append>
-      <v-list nav>
-        <v-list-item to="/upgrade">
-          <v-list-item-icon>
-            <v-icon>mdi-package-up</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-title class="font-weight-light">
-            Upgrade To PRO
-          </v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </template>
   </v-navigation-drawer>
 </template>
 
