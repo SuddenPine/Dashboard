@@ -16,8 +16,7 @@
             &copy;
             {{ new Date().getFullYear() }}, made with
             <v-icon size="18">mdi-heart</v-icon>
-            by <a href="https://www.creative-tim.com">Creative Tim</a> for a
-            better web.
+            by Sudden Pine
           </div>
         </v-col>
       </v-row>
@@ -31,9 +30,9 @@ export default {
     return {
       links: [
         { name: "Home", Link: "/#" },
-        { name: "Creative Tim", Link: "https://www.creative-tim.com" },
-        { name: "About Us", Link: "https://creative-tim.com/presentation" },
-        { name: "Blog", Link: "https://blog.creative-tim.com" }
+        // { name: "Creative Tim", Link: "https://www.creative-tim.com" },
+        { name: "About Us", Link: "" }
+        // { name: "Blog", Link: "https://blog.creative-tim.com" }
       ]
     };
   }

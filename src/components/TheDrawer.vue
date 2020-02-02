@@ -23,7 +23,7 @@
       </v-list-item-avatar>
 
       <v-list-item-title class="title">
-        My Future
+        My Future Home
       </v-list-item-title>
     </v-list-item>
 
