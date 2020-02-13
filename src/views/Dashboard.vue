@@ -283,7 +283,7 @@ import Axios from 'axios';
 export default {
   created(){
     Axios
-      .get('http://localhost:3000/test')
+      .get('https://pbt3g11w0i.execute-api.us-east-1.amazonaws.com/dev/ping')
       .then(response => {
         console.log(response.data)
       })
