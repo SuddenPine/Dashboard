@@ -8,8 +8,8 @@
           header-icon="mdi-home-outline"
           header-title="Daily Solar Production"
           :header-value= "dailystats.dailySolar + 'W'"
-          sub-icon="mdi-calendar"
-          sub-text="15 minutes ago"
+          sub-icon="mdi-update"
+          :sub-text="dailystats.updated + ' minutes ago'"
         />
       </v-col>
 
@@ -20,8 +20,8 @@
           header-icon="mdi-information-outline"
           header-title="Daily Energy Consumption"
           :header-value="dailystats.dailyConS + 'W' "
-          sub-icon="mdi-calendar"
-          sub-text="10 minutes ago"
+          sub-icon="mdi-update"
+          :sub-text="dailystats.updated + ' minutes ago'"
         />
       </v-col>
 
@@ -29,13 +29,13 @@
       <v-col cols="12" sm="6" lg="3">
         <ct-stats-card
           header-color="orange"
-          header-icon="mdi-battery-40"
+          :header-icon="battery"
           header-title="Battery"
           :header-value="dailystats.dailyBattery + '%'"
           small-value=""
-          sub-icon="mdi-calendar"
+          sub-icon="mdi-update"
           sub-icon-color=""
-          sub-text="10 minutes ago"
+          :sub-text="dailystats.updated + ' minutes ago'"
           sub-text-color="text-primary"
         />
       </v-col>
@@ -48,7 +48,7 @@
           header-title="Money Saved Today"
           :header-value="'£' + dailystats.dailySave"
           sub-icon="mdi-update"
-          sub-text="Just Updated"
+          :sub-text="dailystats.updated + ' minutes ago'"
         />
       </v-col>
       <!-- Daily energy consumption chart -->
@@ -285,7 +285,10 @@
 import energyAPI from '@/services/energyAPI.js';
 // import axios from 'axios';
 export default {
-  created(){
+  mounted: function(){
+    console.log(this.getBattery())
+  },
+  created: function(){
     energyAPI.getDailyStats()
       .then(response => {
         this.dailystats = response.data
@@ -295,8 +298,24 @@ export default {
       })
   },
   name: "Dashboard",
+  computed: function(){
+    getBattery(){
+      return "mdi-battery"
+        // if (this.dailystats.dailyBattery <= 10){
+        //     return  "mdi-battery-10"
+        // }else if (this.dailystats.dailyBattery > 10 && this.dailystats.dailyBattery <= 50){
+        //     return  "mdi-battery-40"
+        // }else if (this.dailystats.dailyBattery > 50 && this.dailystats.dailyBattery <= 70){
+        //     return "mdi-battery-70"
+        // }else if (this.dailystats.dailyBattery > 70 && this.dailystats.dailyBattery <= 99) {
+        //     return  "mdi-battery-90"
+        // }else{
+        //     return  "mdi-battery"
+        // }
+      },
   data() {
     return {
+      battery: '',
       dailystats:'',
       dailyConsumptionChart: {
         data: {
