@@ -10,10 +10,14 @@ const energyAPI = axios.create({
 })
 
 export default {
+  axios,
   getPing(){
     return energyAPI.get('/ping')
   },
   getDailyStats(){
     return energyAPI.get('dailyStats')
+  },
+  getDailyProd(){
+    return energyAPI.get('dailyProd')
   }
 }

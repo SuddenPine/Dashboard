@@ -79,8 +79,8 @@
       <!-- Daily solar production -->
       <v-col cols="12" lg="4">
         <ct-chart-card
-          :data="dailyProductionChart.data"
-          :options="dailyProductionChart.options"
+          :data="dailyProd.data"
+          :options="dailyProd.options"
           :responsive-options="dailyProductionChart.responsiveOptions"
           chart-color="green"
           type="Bar"
@@ -286,14 +286,15 @@ import energyAPI from '@/services/energyAPI.js';
 // import axios from 'axios';
 export default {
   created(){
-    energyAPI.getDailyStats()
-      .then(response => {
-        this.dailystats = response.data
-        console.log(response.data)
-      })
-      .catch(error => {
-        console.log('There was an error: ' + error.response)
-      })
+    // get data from API by multiple api calls
+    energyAPI.axios.all([
+      energyAPI.getDailyStats(),
+      energyAPI.getDailyProd()
+    ])
+    .then(energyAPI.axios.spread((...responses) =>{
+      this.dailystats = responses[0].data,
+      this.dailyProd = responses[1].data
+    }))
   },
   name: "Dashboard",
   methods: {
@@ -320,6 +321,7 @@ export default {
   data(){
     return {
       dailystats:'',
+      dailyProd:'',
       dailyConsumptionChart: {
         data: {
           labels: ["0", "3", "6", "9", "12", "15", "18","21","24"],
