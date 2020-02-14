@@ -6,19 +6,32 @@
         <ct-stats-card
           header-color="green"
           header-icon="mdi-home-outline"
-          header-title="Solar Production"
-          header-value="$1.6kW"
+          header-title="Daily Solar Production"
+          :header-value= "dailystats.dailySolar + 'W'"
           sub-icon="mdi-calendar"
           sub-text="15 minutes ago"
         />
       </v-col>
+
+      <!-- Energy consumption card -->
+      <v-col cols="12" sm="6" lg="3">
+        <ct-stats-card
+          header-color="red"
+          header-icon="mdi-information-outline"
+          header-title="Daily Energy Consumption"
+          :header-value="dailystats.dailyConS + 'W' "
+          sub-icon="mdi-calendar"
+          sub-text="10 minutes ago"
+        />
+      </v-col>
+
       <!-- Battery card -->
       <v-col cols="12" sm="6" lg="3">
         <ct-stats-card
           header-color="orange"
           header-icon="mdi-battery-40"
           header-title="Battery"
-          header-value="40%"
+          :header-value="dailystats.dailyBattery + '%'"
           small-value=""
           sub-icon="mdi-calendar"
           sub-icon-color=""
@@ -26,24 +39,14 @@
           sub-text-color="text-primary"
         />
       </v-col>
-      <!-- Energy consumption card -->
-      <v-col cols="12" sm="6" lg="3">
-        <ct-stats-card
-          header-color="red"
-          header-icon="mdi-information-outline"
-          header-title="Energy Consumption"
-          header-value="360W"
-          sub-icon="mdi-calendar"
-          sub-text="10 minutes ago"
-        />
-      </v-col>
+
       <!-- money saved card -->
       <v-col cols="12" sm="6" lg="3">
         <ct-stats-card
           header-color="info"
           header-icon="mdi-cash-usd"
           header-title="Money Saved Today"
-          header-value="£6"
+          :header-value="'£' + dailystats.dailySave"
           sub-icon="mdi-update"
           sub-text="Just Updated"
         />
@@ -279,13 +282,13 @@
 </template>
 
 <script>
-import Axios from 'axios';
+import energyAPI from '@/services/energyAPI.js';
+// import axios from 'axios';
 export default {
   created(){
-    Axios
-      .get('https://pbt3g11w0i.execute-api.us-east-1.amazonaws.com/dev/ping')
+    energyAPI.getDailyStats()
       .then(response => {
-        console.log(response.data)
+        this.dailystats = response.data
       })
       .catch(error => {
         console.log('There was an error: ' + error.response)
@@ -294,6 +297,7 @@ export default {
   name: "Dashboard",
   data() {
     return {
+      dailystats:'',
       dailyConsumptionChart: {
         data: {
           labels: ["M", "T", "W", "T", "F", "S", "S"],
