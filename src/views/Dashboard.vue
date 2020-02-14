@@ -29,7 +29,7 @@
       <v-col cols="12" sm="6" lg="3">
         <ct-stats-card
           header-color="orange"
-          :header-icon="battery"
+          :header-icon="getBattery()"
           header-title="Battery"
           :header-value="dailystats.dailyBattery + '%'"
           small-value=""
@@ -285,42 +285,45 @@
 import energyAPI from '@/services/energyAPI.js';
 // import axios from 'axios';
 export default {
-  mounted: function(){
-    console.log(this.getBattery())
-  },
-  created: function(){
+  created(){
     energyAPI.getDailyStats()
       .then(response => {
         this.dailystats = response.data
+        console.log(response.data)
       })
       .catch(error => {
         console.log('There was an error: ' + error.response)
       })
   },
   name: "Dashboard",
-  computed: function(){
+  methods: {
     getBattery(){
-      return "mdi-battery"
-        // if (this.dailystats.dailyBattery <= 10){
-        //     return  "mdi-battery-10"
-        // }else if (this.dailystats.dailyBattery > 10 && this.dailystats.dailyBattery <= 50){
-        //     return  "mdi-battery-40"
-        // }else if (this.dailystats.dailyBattery > 50 && this.dailystats.dailyBattery <= 70){
-        //     return "mdi-battery-70"
-        // }else if (this.dailystats.dailyBattery > 70 && this.dailystats.dailyBattery <= 99) {
-        //     return  "mdi-battery-90"
-        // }else{
-        //     return  "mdi-battery"
-        // }
+        if (this.dailystats.dailyBattery <= 10){
+            return  "mdi-battery-10"
+        }else if (this.dailystats.dailyBattery > 10 && this.dailystats.dailyBattery <= 20){
+            return  "mdi-battery-20"
+        }else if (this.dailystats.dailyBattery > 20 && this.dailystats.dailyBattery <= 30){
+            return "mdi-battery-30"
+        }else if (this.dailystats.dailyBattery > 30 && this.dailystats.dailyBattery <= 40){
+            return "mdi-battery-40"
+        }else if (this.dailystats.dailyBattery > 40 && this.dailystats.dailyBattery <= 50){
+            return "mdi-battery-50"
+        }else if (this.dailystats.dailyBattery > 60 && this.dailystats.dailyBattery <= 80){
+            return "mdi-battery-70"
+        }else if (this.dailystats.dailyBattery > 80 && this.dailystats.dailyBattery <= 99) {
+            return  "mdi-battery-80"
+        }else{
+            return  "mdi-battery"
+        }
+        }
       },
-  data() {
+  data(){
     return {
-      battery: '',
       dailystats:'',
       dailyConsumptionChart: {
         data: {
-          labels: ["M", "T", "W", "T", "F", "S", "S"],
-          series: [[250, 300, 332, 311, 320, 450, 501]]
+          labels: ["0", "3", "6", "9", "12", "15", "18","21","24"],
+          series: [[250, 300, 332, 311, 320, 450, 501,201,340]]
         },
         options: {
           lineSmooth: this.$chartist.Interpolation.cardinal({
@@ -450,10 +453,11 @@ export default {
       }
     };
   },
-  methods: {
-    complete(index) {
-      this.list[index] = !this.list[index];
-    }
-  }
-};
+  // methods: {
+  //   complete(index) {
+  //     this.list[index] = !this.list[index];
+  //   }
+  // }
+}
+
 </script>
