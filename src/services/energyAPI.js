@@ -19,5 +19,11 @@ export default {
   },
   getDailyProd(){
     return energyAPI.get('dailyProd')
+  },
+  getDailyCons(){
+    return energyAPI.get('dailyCons')
+  },
+  getWeeklyCons(){
+    return energyAPI.get('weeklyCons')
   }
 }

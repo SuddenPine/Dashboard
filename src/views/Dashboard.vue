@@ -54,23 +54,23 @@
       <!-- Daily energy consumption chart -->
       <v-col cols="12" lg="4">
         <ct-chart-card
-          :data="dailyConsumptionChart.data"
-          :options="dailyConsumptionChart.options"
-          chart-color="red lighten-1"
+          :data="dailyCons.data"
+          :options="dailyCons.options"
+          chart-color="teal darken-2"
           type="Line"
         >
-          <h4 class="title font-weight-light">Daily Energy Consumption</h4>
+          <h4 class="title font-weight-light">Daily Energy Consumption (kW)</h4>
 
           <p class="category d-inline-flex font-weight-light mb-0">
             <v-icon color="red" small>mdi-arrow-up</v-icon>
-            <span class="red--text">11%</span>&nbsp;increase in today's energy
+            <span class="red--text">{{dailyCons.percentage}}%</span>&nbsp;increase in today's energy
             consumption
           </p>
 
           <template v-slot:actions>
             <v-icon class="mr-2" small>mdi-clock-outline</v-icon>
             <span class="caption grey--text font-weight-light"
-              >updated 4 minutes ago</span
+              >updated {{dailyCons.updated}} minutes ago</span
             >
           </template>
         </ct-chart-card>
@@ -82,21 +82,21 @@
           :data="dailyProd.data"
           :options="dailyProd.options"
           :responsive-options="dailyProductionChart.responsiveOptions"
-          chart-color="green"
-          type="Bar"
+          chart-color="orange"
+          type="Line"
         >
           <h4 class="title font-weight-light">Daily Solar Production (kW)</h4>
 
           <p class="d-inline-flex font-weight-light mb-0">
             <v-icon color="green" small>mdi-arrow-up</v-icon>
-            <span class="green--text">12%</span>&nbsp; increase in today's solar
+            <span class="green--text">{{dailyProd.percentage}}%</span>&nbsp; increase in today's solar
             production
           </p>
 
           <template v-slot:actions>
             <v-icon class="mr-2" small>mdi-clock-outline</v-icon>
             <span class="caption grey--text font-weight-light"
-              >updated 10 minutes ago</span
+              >updated {{dailyProd.updated}} minutes ago</span
             >
           </template>
         </ct-chart-card>
@@ -105,16 +105,21 @@
       <!-- Energy consumption by room -->
       <v-col cols="12" lg="4">
         <ct-chart-card
-          :data="energyByRoom.data"
-          :options="energyByRoom.options"
-          chart-color="blue lighten-1"
+          :data="weeklyCons.data"
+          :options="weeklyCons.options"
+          chart-color="light-blue darken-1"
           type="Bar"
         >
-          <h3 class="title font-weight-light">Energy Consumption by Room</h3>
+          <h3 class="title font-weight-light">Weekly Energy Consumption (kW)</h3>
 
-          <p class="d-inline-flex font-weight-light mb-0">
+          <!-- <p class="d-inline-flex font-weight-light mb-0">
             <v-icon color="green" small>mdi-emoticon-happy</v-icon>
             &nbsp; consumption within normal parameter
+          </p> -->
+
+          <p class="d-inline-flex font-weight-light mb-0">
+            <v-icon color="red" small>mdi-arrow-up</v-icon>
+            <span class="red--text">{{weeklyCons.percentage}}%</span>&nbsp; increase in energy consumption this week
           </p>
 
           <template v-slot:actions>
@@ -129,7 +134,18 @@
       <!-- Energy hungrary devices -->
       <v-col cols="12" lg="6">
         <ct-card
-          header-color="orange"
+          header-color="light-blue lighten-2"
+          header-title="Energy Consumption by Devices"
+          header-text="Identy energy hungary devices"
+        >
+          <v-data-table :headers="headers" :items="items" hide-default-footer />
+        </ct-card>
+      </v-col>
+
+    <!-- Energy consumption by room -->
+      <v-col cols="12" lg="6">
+        <ct-card
+          header-color="teal accent-3"
           header-title="Energy Consumption by Devices"
           header-text="Identy energy hungary devices"
         >
@@ -289,11 +305,15 @@ export default {
     // get data from API by multiple api calls
     energyAPI.axios.all([
       energyAPI.getDailyStats(),
-      energyAPI.getDailyProd()
+      energyAPI.getDailyProd(),
+      energyAPI.getDailyCons(),
+      energyAPI.getWeeklyCons()
     ])
     .then(energyAPI.axios.spread((...responses) =>{
       this.dailystats = responses[0].data,
-      this.dailyProd = responses[1].data
+      this.dailyProd = responses[1].data,
+      this.dailyCons = responses[2].data,
+      this.weeklyCons = responses[3].data
     }))
   },
   name: "Dashboard",
@@ -309,7 +329,7 @@ export default {
             return "mdi-battery-40"
         }else if (this.dailystats.dailyBattery > 40 && this.dailystats.dailyBattery <= 50){
             return "mdi-battery-50"
-        }else if (this.dailystats.dailyBattery > 60 && this.dailystats.dailyBattery <= 80){
+        }else if (this.dailystats.dailyBattery > 50 && this.dailystats.dailyBattery <= 80){
             return "mdi-battery-70"
         }else if (this.dailystats.dailyBattery > 80 && this.dailystats.dailyBattery <= 99) {
             return  "mdi-battery-80"
@@ -322,71 +342,9 @@ export default {
     return {
       dailystats:'',
       dailyProd:'',
-      dailyConsumptionChart: {
-        data: {
-          labels: ["0", "3", "6", "9", "12", "15", "18","21","24"],
-          series: [[250, 300, 332, 311, 320, 450, 501,201,340]]
-        },
-        options: {
-          lineSmooth: this.$chartist.Interpolation.cardinal({
-            tension: 0
-          }),
-          low: 0,
-          high: 600, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-          chartPadding: {
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0
-          }
-        }
-      },
-      energyByRoom: {
-        data: {
-          labels: [
-            "Kitchen",
-            "Bed room1",
-            "Bed room2",
-            "Bath room",
-            "Dining Room",
-            "Living Room",
-            "Base ment",
-            "Hall"
-          ],
-          series: [[65, 20, 40, 15, 55, 30, 10, 16]]
-        },
-        options: {
-          lineSmooth: this.$chartist.Interpolation.cardinal({
-            tension: 0
-          }),
-          low: 0,
-          high: 100, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-          chartPadding: {
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0
-          }
-        }
-      },
+      dailyCons:'',
+      weeklyCons:'',
       dailyProductionChart: {
-        data: {
-          labels: ["M", "T", "W", "T", "F", "S", "S"],
-          series: [[1.2, 3, 2.3, 2.1, 1.4, 1.2, 1.4]]
-        },
-        options: {
-          axisX: {
-            showGrid: false
-          },
-          low: 0,
-          high: 5,
-          chartPadding: {
-            top: 0,
-            right: 5,
-            bottom: 0,
-            left: 0
-          }
-        },
         responsiveOptions: [
           [
             "screen and (max-width: 640px)",
