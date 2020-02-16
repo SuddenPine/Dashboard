@@ -51,26 +51,27 @@
           :sub-text="dailystats.updated + ' minutes ago'"
         />
       </v-col>
-      <!-- Daily energy consumption chart -->
+      <!-- Daily energy consumption x production chart -->
       <v-col cols="12" lg="4">
         <ct-chart-card
-          :data="dailyCons.data"
-          :options="dailyCons.options"
+          :data="dailyCompare.data"
+          :options="dailyCompare.options"
           chart-color="teal darken-2"
           type="Line"
         >
-          <h4 class="title font-weight-light">Daily Energy Consumption (kW)</h4>
+          <h4 class="title font-weight-light">Daily Energy Consumption vs Production(kW)</h4>
 
           <p class="category d-inline-flex font-weight-light mb-0">
-            <v-icon color="red" small>mdi-arrow-up</v-icon>
-            <span class="red--text">{{dailyCons.percentage}}%</span>&nbsp;increase in today's energy
-            consumption
+            <v-icon color="red" small>mdi-arrow-down</v-icon>
+            <span class="red--text">consumption (red)</span>&nbsp;
+            <v-icon color="green" small>mdi-arrow-up</v-icon>
+            <span class="green--text">production (white)</span>&nbsp; in the past 9 hours
           </p>
 
           <template v-slot:actions>
             <v-icon class="mr-2" small>mdi-clock-outline</v-icon>
             <span class="caption grey--text font-weight-light"
-              >updated {{dailyCons.updated}} minutes ago</span
+              >updated {{dailyCompare.updated}} minutes ago</span
             >
           </template>
         </ct-chart-card>
@@ -79,24 +80,24 @@
       <!-- Daily solar production -->
       <v-col cols="12" lg="4">
         <ct-chart-card
-          :data="dailyProd.data"
-          :options="dailyProd.options"
+          :data="weeklyProd.data"
+          :options="weeklyProd.options"
           :responsive-options="dailyProductionChart.responsiveOptions"
           chart-color="orange"
-          type="Line"
+          type="Bar"
         >
-          <h4 class="title font-weight-light">Daily Solar Production (kW)</h4>
+          <h4 class="title font-weight-light">Weekly Solar Production (kW)</h4>
 
           <p class="d-inline-flex font-weight-light mb-0">
             <v-icon color="green" small>mdi-arrow-up</v-icon>
-            <span class="green--text">{{dailyProd.percentage}}%</span>&nbsp; increase in today's solar
-            production
+            <span class="green--text">{{weeklyProd.percentage}}%</span>&nbsp; increase in solar
+            production this week
           </p>
 
           <template v-slot:actions>
             <v-icon class="mr-2" small>mdi-clock-outline</v-icon>
             <span class="caption grey--text font-weight-light"
-              >updated {{dailyProd.updated}} minutes ago</span
+              >updated {{weeklyProd.updated}} minutes ago</span
             >
           </template>
         </ct-chart-card>
@@ -305,15 +306,16 @@ export default {
     // get data from API by multiple api calls
     energyAPI.axios.all([
       energyAPI.getDailyStats(),
-      energyAPI.getDailyProd(),
-      energyAPI.getDailyCons(),
-      energyAPI.getWeeklyCons()
+      energyAPI.getWeeklyProd(),
+      energyAPI.getDailyCompare(),
+      energyAPI.getWeeklyCons(),
     ])
     .then(energyAPI.axios.spread((...responses) =>{
       this.dailystats = responses[0].data,
-      this.dailyProd = responses[1].data,
-      this.dailyCons = responses[2].data,
-      this.weeklyCons = responses[3].data
+      this.weeklyProd = responses[1].data,
+      this.dailyCompare = responses[2].data,
+      this.weeklyCons = responses[3].data,
+      this.weeklyProd = responses[4].data
     }))
   },
   name: "Dashboard",
@@ -341,9 +343,9 @@ export default {
   data(){
     return {
       dailystats:'',
-      dailyProd:'',
-      dailyCons:'',
+      dailyCompare:'',
       weeklyCons:'',
+      weeklyProd:'',
       dailyProductionChart: {
         responsiveOptions: [
           [

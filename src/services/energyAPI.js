@@ -17,13 +17,13 @@ export default {
   getDailyStats(){
     return energyAPI.get('dailyStats')
   },
-  getDailyProd(){
-    return energyAPI.get('dailyProd')
-  },
-  getDailyCons(){
-    return energyAPI.get('dailyCons')
+  getDailyCompare(){
+    return energyAPI.get('dailyCompare')
   },
   getWeeklyCons(){
     return energyAPI.get('weeklyCons')
+  },
+  getWeeklyProd(){
+    return energyAPI.get('weeklyProd')
   }
 }
