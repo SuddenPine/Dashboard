@@ -25,5 +25,8 @@ export default {
   },
   getWeeklyProd(){
     return energyAPI.get('weeklyProd')
+  },
+  getByDevice(){
+    return energyAPI.get('byDevice')
   }
 }

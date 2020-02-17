@@ -139,7 +139,7 @@
           header-title="Energy Consumption by Devices"
           header-text="Identy energy hungary devices"
         >
-          <v-data-table :headers="headers" :items="items" hide-default-footer />
+          <v-data-table :headers="headers" :items="byDevice.items" hide-default-footer />
         </ct-card>
       </v-col>
 
@@ -309,13 +309,14 @@ export default {
       energyAPI.getWeeklyProd(),
       energyAPI.getDailyCompare(),
       energyAPI.getWeeklyCons(),
+      energyAPI.getByDevice()
     ])
     .then(energyAPI.axios.spread((...responses) =>{
       this.dailystats = responses[0].data,
       this.weeklyProd = responses[1].data,
       this.dailyCompare = responses[2].data,
       this.weeklyCons = responses[3].data,
-      this.weeklyProd = responses[4].data
+      this.byDevice = responses[4].data
     }))
   },
   name: "Dashboard",
@@ -346,6 +347,7 @@ export default {
       dailyCompare:'',
       weeklyCons:'',
       weeklyProd:'',
+      byDevice:'',
       dailyProductionChart: {
         responsiveOptions: [
           [
