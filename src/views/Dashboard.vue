@@ -7,7 +7,7 @@
           header-color="green"
           header-icon="mdi-home-outline"
           header-title="Daily Solar Production"
-          :header-value= "dailystats.dailySolar + 'W'"
+          :header-value= "dailystats.dailySolar + ' kWh'"
           sub-icon="mdi-update"
           :sub-text="dailystats.updated + ' minutes ago'"
         />
@@ -19,7 +19,7 @@
           header-color="red"
           header-icon="mdi-information-outline"
           header-title="Daily Energy Consumption"
-          :header-value="dailystats.dailyConS + 'W' "
+          :header-value="dailystats.dailyConS + ' kWh' "
           sub-icon="mdi-update"
           :sub-text="dailystats.updated + ' minutes ago'"
         />
@@ -139,8 +139,10 @@
           header-title="Energy Consumption by Devices"
           header-text="Identy energy hungary devices"
         >
-          <v-data-table :headers="headers" :items="items" hide-default-footer />
+          <v-data-table :headers="headers" :items="byDevice.items" hide-default-footer />
         </ct-card>
+        <h1>{{byDevice.items[0].consumption}}</h1>
+        <h1>haha</h1>
       </v-col>
 
     <!-- Energy consumption by room -->
@@ -309,17 +311,28 @@ export default {
       energyAPI.getWeeklyProd(),
       energyAPI.getDailyCompare(),
       energyAPI.getWeeklyCons(),
+      energyAPI.getByDevice(),
     ])
     .then(energyAPI.axios.spread((...responses) =>{
       this.dailystats = responses[0].data,
       this.weeklyProd = responses[1].data,
       this.dailyCompare = responses[2].data,
       this.weeklyCons = responses[3].data,
-      this.weeklyProd = responses[4].data
+      this.byDevice = responses[4].data
+      this.byDevice.items[0].consumption = setInterval(() => this.increment(), 1000)
     }))
   },
   name: "Dashboard",
+  mounted(){
+    // this.test = setInterval(() => this.increment(), 1000);
+    // this.test = this.byDevice.items[0].name
+  },
   methods: {
+    increment(){
+      index = Math.floor(Math.random() * this.byDevice.items.length)
+      // this.byDevice.items[index].consumption +=1
+      this.byDevice.items[index].consumption++
+    },
     getBattery(){
         if (this.dailystats.dailyBattery <= 10){
             return  "mdi-battery-10"
@@ -346,6 +359,8 @@ export default {
       dailyCompare:'',
       weeklyCons:'',
       weeklyProd:'',
+      byDevice:'',
+      test:'',
       dailyProductionChart: {
         responsiveOptions: [
           [
@@ -378,33 +393,6 @@ export default {
           text: "Consumption",
           value: "consumption",
           align: "center"
-        }
-      ],
-      items: [
-        {
-          name: "Washing Machine",
-          consumption: "25",
-          room: "Kitchen"
-        },
-        {
-          name: "Fridge",
-          consumption: "40",
-          room: "Kitchen"
-        },
-        {
-          name: "TV",
-          consumption: "13",
-          room: "Living Room"
-        },
-        {
-          name: "Sound System",
-          consumption: "10",
-          room: "Living Room"
-        },
-        {
-          name: "Lights",
-          consumption: "75",
-          room: "All"
         }
       ],
       tabs: 0,
