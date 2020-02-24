@@ -141,12 +141,10 @@
         >
           <v-data-table :headers="headers" :items="byDevice.items" hide-default-footer />
         </ct-card>
-        <h1>{{test}}</h1>
-        <h1>haha</h1>
       </v-col>
 
     <!-- Energy consumption by room -->
-      <v-col cols="12" lg="6">
+      <!-- <v-col cols="12" lg="6">
         <ct-card
           header-color="teal accent-3"
           header-title="Energy Consumption by Devices"
@@ -154,7 +152,7 @@
         >
           <v-data-table :headers="headers" :items="items" hide-default-footer />
         </ct-card>
-      </v-col>
+      </v-col> -->
 
       <!-- Environment card -->
       <v-col cols="12" lg="6">
