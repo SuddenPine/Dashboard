@@ -7,7 +7,7 @@
           header-color="green"
           header-icon="mdi-home-outline"
           header-title="Daily Solar Production"
-          :header-value= "dailystats.dailySolar + 'W'"
+          :header-value= "dailystats.dailySolar + ' kWh'"
           sub-icon="mdi-update"
           :sub-text="dailystats.updated + ' minutes ago'"
         />
@@ -19,7 +19,7 @@
           header-color="red"
           header-icon="mdi-information-outline"
           header-title="Daily Energy Consumption"
-          :header-value="dailystats.dailyConS + 'W' "
+          :header-value="dailystats.dailyConS + ' kWh' "
           sub-icon="mdi-update"
           :sub-text="dailystats.updated + ' minutes ago'"
         />
@@ -77,7 +77,7 @@
         </ct-chart-card>
       </v-col>
 
-      <!-- Daily solar production -->
+      <!-- weekly solar production -->
       <v-col cols="12" lg="4">
         <ct-chart-card
           :data="weeklyProd.data"
@@ -103,7 +103,7 @@
         </ct-chart-card>
       </v-col>
 
-      <!-- Energy consumption by room -->
+      <!-- Weekly Energy Consumption -->
       <v-col cols="12" lg="4">
         <ct-chart-card
           :data="weeklyCons.data"
@@ -141,6 +141,8 @@
         >
           <v-data-table :headers="headers" :items="byDevice.items" hide-default-footer />
         </ct-card>
+        <h1>{{test}}</h1>
+        <h1>haha</h1>
       </v-col>
 
     <!-- Energy consumption by room -->
@@ -320,7 +322,15 @@ export default {
     }))
   },
   name: "Dashboard",
+  mounted(){
+    setInterval(() => this.increment(), 1000)
+  },
   methods: {
+    // increament device comsumption values
+    increment(){
+      var index = Math.floor(Math.random() * this.byDevice.items.length)
+      this.byDevice.items[index].consumption++
+    },
     getBattery(){
         if (this.dailystats.dailyBattery <= 10){
             return  "mdi-battery-10"
@@ -348,6 +358,7 @@ export default {
       weeklyCons:'',
       weeklyProd:'',
       byDevice:'',
+      test:0,
       dailyProductionChart: {
         responsiveOptions: [
           [
@@ -380,33 +391,6 @@ export default {
           text: "Consumption",
           value: "consumption",
           align: "center"
-        }
-      ],
-      items: [
-        {
-          name: "Washing Machine",
-          consumption: "25",
-          room: "Kitchen"
-        },
-        {
-          name: "Fridge",
-          consumption: "40",
-          room: "Kitchen"
-        },
-        {
-          name: "TV",
-          consumption: "13",
-          room: "Living Room"
-        },
-        {
-          name: "Sound System",
-          consumption: "10",
-          room: "Living Room"
-        },
-        {
-          name: "Lights",
-          consumption: "75",
-          room: "All"
         }
       ],
       tabs: 0,
