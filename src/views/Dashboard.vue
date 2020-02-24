@@ -141,11 +141,7 @@
         >
           <v-data-table :headers="headers" :items="byDevice.items" hide-default-footer />
         </ct-card>
-<<<<<<< HEAD
         <h1>{{test}}</h1>
-=======
-        <h1>{{byDevice.items[0].consumption}}</h1>
->>>>>>> f9e80ffeea748e8c9aa54537c131bdc90aba4ab0
         <h1>haha</h1>
       </v-col>
 
@@ -315,11 +311,7 @@ export default {
       energyAPI.getWeeklyProd(),
       energyAPI.getDailyCompare(),
       energyAPI.getWeeklyCons(),
-<<<<<<< HEAD
       energyAPI.getByDevice()
-=======
-      energyAPI.getByDevice(),
->>>>>>> f9e80ffeea748e8c9aa54537c131bdc90aba4ab0
     ])
     .then(energyAPI.axios.spread((...responses) =>{
       this.dailystats = responses[0].data,
@@ -327,30 +319,16 @@ export default {
       this.dailyCompare = responses[2].data,
       this.weeklyCons = responses[3].data,
       this.byDevice = responses[4].data
-<<<<<<< HEAD
-=======
-      this.byDevice.items[0].consumption = setInterval(() => this.increment(), 1000)
->>>>>>> f9e80ffeea748e8c9aa54537c131bdc90aba4ab0
     }))
   },
   name: "Dashboard",
   mounted(){
-<<<<<<< HEAD
     setInterval(() => this.increment(), 1000)
   },
   methods: {
     // increament device comsumption values
     increment(){
       var index = Math.floor(Math.random() * this.byDevice.items.length)
-=======
-    // this.test = setInterval(() => this.increment(), 1000);
-    // this.test = this.byDevice.items[0].name
-  },
-  methods: {
-    increment(){
-      index = Math.floor(Math.random() * this.byDevice.items.length)
-      // this.byDevice.items[index].consumption +=1
->>>>>>> f9e80ffeea748e8c9aa54537c131bdc90aba4ab0
       this.byDevice.items[index].consumption++
     },
     getBattery(){
@@ -380,11 +358,7 @@ export default {
       weeklyCons:'',
       weeklyProd:'',
       byDevice:'',
-<<<<<<< HEAD
       test:0,
-=======
-      test:'',
->>>>>>> f9e80ffeea748e8c9aa54537c131bdc90aba4ab0
       dailyProductionChart: {
         responsiveOptions: [
           [
