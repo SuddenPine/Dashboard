@@ -30,9 +30,9 @@ export default {
     return {
       links: [
         { name: "Home", Link: "/#" },
-        // { name: "Creative Tim", Link: "https://www.creative-tim.com" },
+        // { name: "", Link: "" },
         { name: "About Us", Link: "" }
-        // { name: "Blog", Link: "https://blog.creative-tim.com" }
+        // { name: "", Link: "" }
       ]
     };
   }

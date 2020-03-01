@@ -187,7 +187,7 @@
                 <v-list-item two-line>
                   <v-list-item-content>
                     <v-list-item-title class="headline"
-                      >Edinburgh</v-list-item-title
+                      >{{location}}</v-list-item-title
                     >
                     <v-list-item-subtitle
                       >Mon, 12:30 PM, Mostly sunny</v-list-item-subtitle
@@ -198,7 +198,7 @@
                 <v-card-text>
                   <v-row align="center">
                     <v-col class="display-3" cols="6">
-                      23&deg;C
+                      {{mytemp}}&deg;C
                     </v-col>
                     <v-col cols="6">
                       <v-img
@@ -299,9 +299,8 @@
 </template>
 
 <script>
-import weatherAPI from '@/services/weatherAPI.js'
-import energyAPI from '@/services/energyAPI.js'
-
+import energyAPI from '@/services/energyAPI.js';
+import Axios from 'axios'
 // import axios from 'axios';
 export default {
   created(){
@@ -320,20 +319,23 @@ export default {
       this.weeklyCons = responses[3].data,
       this.byDevice = responses[4].data
     })),
-    weatherAPI.axiosW.all([
-      weatherAPI.getWeather()
-    ])
-    .then(weatherAPI.axiosW.spread((...responses) =>{
-      this.weather = responses[0].data
-      Console.log(this.weather)
-    }))
+    Axios.get(this.createLink())
+    .then((response)=>{
+      this.getWeather(response.data)
+    })
   },
   name: "Dashboard",
   mounted(){
     setInterval(() => this.increment(), 1000)
-
   },
   methods: {
+    getWeather(response){
+      this.mytemp = response.main.temp
+    },
+    // get home location's api call link
+    createLink(){
+      return this.weatherAPI + this.location + this.unit + this.key
+    },
     // increament device comsumption values
     increment(){
       var index = Math.floor(Math.random() * this.byDevice.items.length)
@@ -366,7 +368,12 @@ export default {
       weeklyCons:'',
       weeklyProd:'',
       byDevice:'',
-      weather:'',
+      test:0,
+      weatherAPI:'http://api.openweathermap.org/data/2.5/weather?q=',
+      location:'edinburgh,uk',
+      unit:'&units=metric',
+      key:'&appid=4e8e8d8d2ba66009f35871f6b010f075',
+      mytemp:0,
       dailyProductionChart: {
         responsiveOptions: [
           [
