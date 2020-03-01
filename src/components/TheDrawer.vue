@@ -6,6 +6,7 @@
     :src="image"
     mobile-break-point="991"
     width="260"
+    :expand-on-hover= true
   >
     <template v-slot:img="attrs">
       <v-img
