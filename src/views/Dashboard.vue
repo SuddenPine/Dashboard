@@ -300,6 +300,7 @@
 
 <script>
 import energyAPI from '@/services/energyAPI.js';
+import Axios from 'axios'
 // import axios from 'axios';
 export default {
   created(){
@@ -321,9 +322,17 @@ export default {
   },
   name: "Dashboard",
   mounted(){
-    setInterval(() => this.increment(), 1000)
+    setInterval(() => this.increment(), 1000),
+    Axios.get(this.createLink())
+    .then(function (response){
+      console.log(response)
+    })
   },
   methods: {
+    // get home location's api call link
+    createLink(){
+      return this.weatherAPI + this.location + this.key
+    },
     // increament device comsumption values
     increment(){
       var index = Math.floor(Math.random() * this.byDevice.items.length)
@@ -357,6 +366,9 @@ export default {
       weeklyProd:'',
       byDevice:'',
       test:0,
+      weatherAPI:'http://api.openweathermap.org/data/2.5/weather?q=',
+      location:'edinburgh,uk',
+      key:'&appid=4e8e8d8d2ba66009f35871f6b010f075',
       dailyProductionChart: {
         responsiveOptions: [
           [
