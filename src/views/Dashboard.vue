@@ -299,7 +299,9 @@
 </template>
 
 <script>
-import energyAPI from '@/services/energyAPI.js';
+import weatherAPI from '@/services/weatherAPI.js'
+import energyAPI from '@/services/energyAPI.js'
+
 // import axios from 'axios';
 export default {
   created(){
@@ -317,11 +319,19 @@ export default {
       this.dailyCompare = responses[2].data,
       this.weeklyCons = responses[3].data,
       this.byDevice = responses[4].data
+    })),
+    weatherAPI.axiosW.all([
+      weatherAPI.getWeather()
+    ])
+    .then(weatherAPI.axiosW.spread((...responses) =>{
+      this.weather = responses[0].data
+      Console.log(this.weather)
     }))
   },
   name: "Dashboard",
   mounted(){
     setInterval(() => this.increment(), 1000)
+
   },
   methods: {
     // increament device comsumption values
@@ -356,7 +366,7 @@ export default {
       weeklyCons:'',
       weeklyProd:'',
       byDevice:'',
-      test:0,
+      weather:'',
       dailyProductionChart: {
         responsiveOptions: [
           [
