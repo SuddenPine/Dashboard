@@ -190,7 +190,7 @@
                       >{{location}}</v-list-item-title
                     >
                     <v-list-item-subtitle
-                      >Mon, 12:30 PM, Mostly sunny</v-list-item-subtitle
+                      >{{day}}, {{description}}</v-list-item-subtitle
                     >
                   </v-list-item-content>
                 </v-list-item>
@@ -202,8 +202,8 @@
                     </v-col>
                     <v-col cols="6">
                       <v-img
-                        src="http://www2.macs.hw.ac.uk/~sl106/data/sun.png"
-                        alt="Sunny image"
+                        :src= "iconURL"
+                        alt="weather image"
                         width="120"
                       ></v-img>
                     </v-col>
@@ -214,35 +214,15 @@
                   <v-list-item-icon>
                     <v-icon>mdi-weather-windy</v-icon>
                   </v-list-item-icon>
-                  <v-list-item-subtitle>23 km/h</v-list-item-subtitle>
+                  <v-list-item-subtitle>{{wind}} km/h</v-list-item-subtitle>
                 </v-list-item>
 
                 <v-list-item>
                   <v-list-item-icon>
-                    <v-icon>mdi-weather-pouring</v-icon>
+                    <v-icon>mdi-weather-cloudy</v-icon>
                   </v-list-item-icon>
-                  <v-list-item-subtitle>48%</v-list-item-subtitle>
+                  <v-list-item-subtitle>Feels like {{feels}} &deg;C</v-list-item-subtitle>
                 </v-list-item>
-
-                <v-list class="transparent">
-                  <v-list-item v-for="item in forecast" :key="item.day">
-                    <v-list-item-title>{{ item.day }}</v-list-item-title>
-
-                    <v-list-item-icon>
-                      <v-icon>{{ item.icon }}</v-icon>
-                    </v-list-item-icon>
-
-                    <v-list-item-subtitle class="text-right">
-                      {{ item.temp }}
-                    </v-list-item-subtitle>
-                  </v-list-item>
-                </v-list>
-
-                <v-divider></v-divider>
-
-                <v-card-actions>
-                  <v-btn text>Full Report</v-btn>
-                </v-card-actions>
               </v-card>
             </v-tab-item>
             <v-tab-item>
@@ -330,7 +310,31 @@ export default {
   },
   methods: {
     getWeather(response){
-      this.mytemp = response.main.temp
+      var d = new Date()
+      this.day = this.whichDay(d.getDay())
+      this.description = response.weather[0].description
+      this.mytemp = Math.round(response.main.temp)
+      this.wind = response.wind.speed
+      this.feels = response.main.feels_like
+      this.iconCode = response.weather[0].icon
+      this.iconURL = this.iconURL + this.iconCode + '@2x.png'
+    },
+    whichDay(n){
+      if (n == 0){
+        return 'Sunday'
+      }else if(n == 1){
+        return 'Monday'
+      } else if (n == 2){
+        return 'Tuesday'
+      }else if (n == 3){
+        return 'Wednesday'
+      }else if(n == 4){
+        return 'Thursday'
+      }else if (n == 5){
+        return 'Friday'
+      }else{
+        return 'Saturday'
+      }
     },
     // get home location's api call link
     createLink(){
@@ -368,12 +372,17 @@ export default {
       weeklyCons:'',
       weeklyProd:'',
       byDevice:'',
-      test:0,
+      wind:0,
       weatherAPI:'http://api.openweathermap.org/data/2.5/weather?q=',
       location:'edinburgh,uk',
       unit:'&units=metric',
       key:'&appid=4e8e8d8d2ba66009f35871f6b010f075',
       mytemp:0,
+      feels:0,
+      day:'',
+      description:'',
+      iconCode:'',
+      iconURL:'http://openweathermap.org/img/wn/',
       dailyProductionChart: {
         responsiveOptions: [
           [
