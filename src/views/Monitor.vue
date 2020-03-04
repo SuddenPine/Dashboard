@@ -1,8 +1,12 @@
 <template>
-  <div class="content">
+  <!-- <v-container fluid> -->
+  <v-container class="content">
+    <!-- <v-row class="content"> -->
     <vue-leon ref="leon" :options="options" :controll="controll" class="leon-holder"></vue-leon>
     <!-- <button @click="drawing">animate</button> -->
-  </div>
+    <!-- </v-row> -->
+  </v-container>
+  <!-- </v-container> -->
 </template>
 
 <script>
@@ -15,7 +19,7 @@ export default {
   data() {
     return {
       options: {
-        text: "Hello I am colorful",
+        text: "Welcome Home",
         size: 90,
         breakWord: true,
         isColorful: true,
