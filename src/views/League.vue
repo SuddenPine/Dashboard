@@ -1,9 +1,8 @@
-<template>
-  <h1>here goes energy score league</h1>
-</template>
+<template></template>
 
 <script>
 export default {};
 </script>
 
-<style></style>
+<style>
+</style>
