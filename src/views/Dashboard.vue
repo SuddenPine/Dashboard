@@ -7,7 +7,7 @@
           header-color="green"
           header-icon="mdi-home-outline"
           header-title="Daily Solar Production"
-          :header-value= "dailystats.dailySolar + ' kWh'"
+          :header-value="dailystats.dailySolar + ' kWh'"
           sub-icon="mdi-update"
           :sub-text="dailystats.updated + ' minutes ago'"
         />
@@ -32,9 +32,9 @@
           :header-icon="getBattery()"
           header-title="Battery"
           :header-value="dailystats.dailyBattery + '%'"
-          small-value=""
+          small-value
           sub-icon="mdi-update"
-          sub-icon-color=""
+          sub-icon-color
           :sub-text="dailystats.updated + ' minutes ago'"
           sub-text-color="text-primary"
         />
@@ -70,9 +70,9 @@
 
           <template v-slot:actions>
             <v-icon class="mr-2" small>mdi-clock-outline</v-icon>
-            <span class="caption grey--text font-weight-light"
-              >updated {{dailyCompare.updated}} minutes ago</span
-            >
+            <span
+              class="caption grey--text font-weight-light"
+            >updated {{dailyCompare.updated}} minutes ago</span>
           </template>
         </ct-chart-card>
       </v-col>
@@ -96,9 +96,9 @@
 
           <template v-slot:actions>
             <v-icon class="mr-2" small>mdi-clock-outline</v-icon>
-            <span class="caption grey--text font-weight-light"
-              >updated {{weeklyProd.updated}} minutes ago</span
-            >
+            <span
+              class="caption grey--text font-weight-light"
+            >updated {{weeklyProd.updated}} minutes ago</span>
           </template>
         </ct-chart-card>
       </v-col>
@@ -116,7 +116,7 @@
           <!-- <p class="d-inline-flex font-weight-light mb-0">
             <v-icon color="green" small>mdi-emoticon-happy</v-icon>
             &nbsp; consumption within normal parameter
-          </p> -->
+          </p>-->
 
           <p class="d-inline-flex font-weight-light mb-0">
             <v-icon color="red" small>mdi-arrow-up</v-icon>
@@ -125,9 +125,7 @@
 
           <template v-slot:actions>
             <v-icon class="mr-2" small>mdi-clock-outline</v-icon>
-            <span class="caption grey--text font-weight-light"
-              >updated 10 minutes ago</span
-            >
+            <span class="caption grey--text font-weight-light">updated 10 minutes ago</span>
           </template>
         </ct-chart-card>
       </v-col>
@@ -143,7 +141,7 @@
         </ct-card>
       </v-col>
 
-    <!-- Energy consumption by room -->
+      <!-- Energy consumption by room -->
       <!-- <v-col cols="12" lg="6">
         <ct-card
           header-color="teal accent-3"
@@ -152,22 +150,14 @@
         >
           <v-data-table :headers="headers" :items="items" hide-default-footer />
         </ct-card>
-      </v-col> -->
+      </v-col>-->
 
       <!-- Environment card -->
       <v-col cols="12" lg="6">
         <ct-card class="card-tabs" header-color="green">
           <template v-slot:header>
-            <v-tabs
-              v-model="tabs"
-              background-color="transparent"
-              slider-color="white"
-            >
-              <span
-                class="subheading font-weight-light mx-3"
-                style="align-self: center"
-                >FYI</span
-              >
+            <v-tabs v-model="tabs" background-color="transparent" slider-color="white">
+              <span class="subheading font-weight-light mx-3" style="align-self: center">FYI</span>
               <v-tab class="mr-3">
                 <v-icon class="mr-2">mdi-weather-sunny</v-icon>Outside
               </v-tab>
@@ -186,26 +176,16 @@
               <v-card class="mx-auto" max-width="400">
                 <v-list-item two-line>
                   <v-list-item-content>
-                    <v-list-item-title class="headline"
-                      >{{location}}</v-list-item-title
-                    >
-                    <v-list-item-subtitle
-                      >{{day}}, {{description}}</v-list-item-subtitle
-                    >
+                    <p class="text-uppercase font-weight-bold">{{location}}</p>
+                    <v-list-item-subtitle>{{day}}, {{description}}</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
 
                 <v-card-text>
                   <v-row align="center">
-                    <v-col class="display-3" cols="6">
-                      {{mytemp}}&deg;C
-                    </v-col>
+                    <v-col class="display-3" cols="6">{{mytemp}}&deg;C</v-col>
                     <v-col cols="6">
-                      <v-img
-                        :src= "iconURL"
-                        alt="weather image"
-                        width="120"
-                      ></v-img>
+                      <v-img :src="iconURL" alt="weather image" width="120"></v-img>
                     </v-col>
                   </v-row>
                 </v-card-text>
@@ -233,9 +213,7 @@
             <v-tab-item>
               <v-card class="mx-auto" color="#26c6da" dark max-width="400">
                 <v-card-title>
-                  <v-icon large left>
-                    mdi-twitter
-                  </v-icon>
+                  <v-icon large left>mdi-twitter</v-icon>
                   <span class="title font-weight-light">Twitter</span>
                 </v-card-title>
 
@@ -250,10 +228,7 @@
                 <v-card-actions>
                   <v-list-item class="grow">
                     <v-list-item-avatar color="grey darken-3">
-                      <v-img
-                        class="elevation-6"
-                        src="http://www2.macs.hw.ac.uk/~sl106/data/ng.png"
-                      ></v-img>
+                      <v-img class="elevation-6" src="http://www2.macs.hw.ac.uk/~sl106/data/ng.png"></v-img>
                     </v-list-item-avatar>
 
                     <v-list-item-content>
@@ -279,110 +254,130 @@
 </template>
 
 <script>
-import energyAPI from '@/services/energyAPI.js';
-import Axios from 'axios'
+import energyAPI from "@/services/energyAPI.js";
+import Axios from "axios";
 // import axios from 'axios';
 export default {
-  created(){
+  created() {
     // get data from API by multiple api calls
-    energyAPI.axios.all([
-      energyAPI.getDailyStats(),
-      energyAPI.getWeeklyProd(),
-      energyAPI.getDailyCompare(),
-      energyAPI.getWeeklyCons(),
-      energyAPI.getByDevice()
-    ])
-    .then(energyAPI.axios.spread((...responses) =>{
-      this.dailystats = responses[0].data,
-      this.weeklyProd = responses[1].data,
-      this.dailyCompare = responses[2].data,
-      this.weeklyCons = responses[3].data,
-      this.byDevice = responses[4].data
-    })),
-    Axios.get(this.createLink())
-    .then((response)=>{
-      this.getWeather(response.data)
-    })
+    energyAPI.axios
+      .all([
+        energyAPI.getDailyStats(),
+        energyAPI.getWeeklyProd(),
+        energyAPI.getDailyCompare(),
+        energyAPI.getWeeklyCons(),
+        energyAPI.getByDevice()
+      ])
+      .then(
+        energyAPI.axios.spread((...responses) => {
+          (this.dailystats = responses[0].data),
+            (this.weeklyProd = responses[1].data),
+            (this.dailyCompare = responses[2].data),
+            (this.weeklyCons = responses[3].data),
+            (this.byDevice = responses[4].data);
+        })
+      ),
+      Axios.get(this.createLink()).then(response => {
+        this.getWeather(response.data);
+      });
   },
   name: "Dashboard",
-  mounted(){
-    setInterval(() => this.increment(), 1000)
+  mounted() {
+    setInterval(() => this.increment(), 1000);
   },
   methods: {
-    getWeather(response){
-      var d = new Date()
-      this.day = this.whichDay(d.getDay())
-      this.description = response.weather[0].description
-      this.mytemp = Math.round(response.main.temp)
-      this.wind = response.wind.speed
-      this.feels = response.main.feels_like
-      this.iconCode = response.weather[0].icon
-      this.iconURL = this.iconURL + this.iconCode + '@2x.png'
+    getWeather(response) {
+      var d = new Date();
+      this.day = this.whichDay(d.getDay());
+      this.description = response.weather[0].description;
+      this.mytemp = Math.round(response.main.temp);
+      this.wind = response.wind.speed;
+      this.feels = response.main.feels_like;
+      this.iconCode = response.weather[0].icon;
+      this.iconURL = this.iconURL + this.iconCode + "@2x.png";
     },
-    whichDay(n){
-      if (n == 0){
-        return 'Sunday'
-      }else if(n == 1){
-        return 'Monday'
-      } else if (n == 2){
-        return 'Tuesday'
-      }else if (n == 3){
-        return 'Wednesday'
-      }else if(n == 4){
-        return 'Thursday'
-      }else if (n == 5){
-        return 'Friday'
-      }else{
-        return 'Saturday'
+    whichDay(n) {
+      if (n == 0) {
+        return "Sunday";
+      } else if (n == 1) {
+        return "Monday";
+      } else if (n == 2) {
+        return "Tuesday";
+      } else if (n == 3) {
+        return "Wednesday";
+      } else if (n == 4) {
+        return "Thursday";
+      } else if (n == 5) {
+        return "Friday";
+      } else {
+        return "Saturday";
       }
     },
     // get home location's api call link
-    createLink(){
-      return this.weatherAPI + this.location + this.unit + this.key
+    createLink() {
+      return this.weatherAPI + this.location + this.unit + this.key;
     },
     // increament device comsumption values
-    increment(){
-      var index = Math.floor(Math.random() * this.byDevice.items.length)
-      this.byDevice.items[index].consumption++
+    increment() {
+      var index = Math.floor(Math.random() * this.byDevice.items.length);
+      this.byDevice.items[index].consumption++;
     },
-    getBattery(){
-        if (this.dailystats.dailyBattery <= 10){
-            return  "mdi-battery-10"
-        }else if (this.dailystats.dailyBattery > 10 && this.dailystats.dailyBattery <= 20){
-            return  "mdi-battery-20"
-        }else if (this.dailystats.dailyBattery > 20 && this.dailystats.dailyBattery <= 30){
-            return "mdi-battery-30"
-        }else if (this.dailystats.dailyBattery > 30 && this.dailystats.dailyBattery <= 40){
-            return "mdi-battery-40"
-        }else if (this.dailystats.dailyBattery > 40 && this.dailystats.dailyBattery <= 50){
-            return "mdi-battery-50"
-        }else if (this.dailystats.dailyBattery > 50 && this.dailystats.dailyBattery <= 80){
-            return "mdi-battery-70"
-        }else if (this.dailystats.dailyBattery > 80 && this.dailystats.dailyBattery <= 99) {
-            return  "mdi-battery-80"
-        }else{
-            return  "mdi-battery"
-        }
-        }
-      },
-  data(){
+    getBattery() {
+      if (this.dailystats.dailyBattery <= 10) {
+        return "mdi-battery-10";
+      } else if (
+        this.dailystats.dailyBattery > 10 &&
+        this.dailystats.dailyBattery <= 20
+      ) {
+        return "mdi-battery-20";
+      } else if (
+        this.dailystats.dailyBattery > 20 &&
+        this.dailystats.dailyBattery <= 30
+      ) {
+        return "mdi-battery-30";
+      } else if (
+        this.dailystats.dailyBattery > 30 &&
+        this.dailystats.dailyBattery <= 40
+      ) {
+        return "mdi-battery-40";
+      } else if (
+        this.dailystats.dailyBattery > 40 &&
+        this.dailystats.dailyBattery <= 50
+      ) {
+        return "mdi-battery-50";
+      } else if (
+        this.dailystats.dailyBattery > 50 &&
+        this.dailystats.dailyBattery <= 80
+      ) {
+        return "mdi-battery-70";
+      } else if (
+        this.dailystats.dailyBattery > 80 &&
+        this.dailystats.dailyBattery <= 99
+      ) {
+        return "mdi-battery-80";
+      } else {
+        return "mdi-battery";
+      }
+    }
+  },
+  data() {
     return {
-      dailystats:'',
-      dailyCompare:'',
-      weeklyCons:'',
-      weeklyProd:'',
-      byDevice:'',
-      wind:0,
-      weatherAPI:'http://api.openweathermap.org/data/2.5/weather?q=',
-      location:'edinburgh,uk',
-      unit:'&units=metric',
-      key:'&appid=4e8e8d8d2ba66009f35871f6b010f075',
-      mytemp:0,
-      feels:0,
-      day:'',
-      description:'',
-      iconCode:'',
-      iconURL:'http://openweathermap.org/img/wn/',
+      dailystats: "",
+      dailyCompare: "",
+      weeklyCons: "",
+      weeklyProd: "",
+      byDevice: "",
+      wind: 0,
+      weatherAPI: "http://api.openweathermap.org/data/2.5/weather?q=",
+      location: "edinburgh,uk",
+      unit: "&units=metric",
+      key: "&appid=4e8e8d8d2ba66009f35871f6b010f075",
+      mytemp: 0,
+      feels: 0,
+      day: "",
+      description: "",
+      iconCode: "",
+      iconURL: "http://openweathermap.org/img/wn/",
       dailyProductionChart: {
         responsiveOptions: [
           [
@@ -424,12 +419,11 @@ export default {
         2: false
       }
     };
-  },
+  }
   // methods: {
   //   complete(index) {
   //     this.list[index] = !this.list[index];
   //   }
   // }
-}
-
+};
 </script>
