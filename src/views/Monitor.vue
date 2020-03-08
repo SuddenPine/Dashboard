@@ -106,6 +106,7 @@
 
 <script>
 import VueLeon from "vue-leon";
+import axios from "axios";
 export default {
   name: "Colorful",
   components: {
