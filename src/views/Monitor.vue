@@ -16,7 +16,7 @@
           <v-img
             class="white--text align-end"
             height="150"
-            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+            src="https://www2.macs.hw.ac.uk/~sl106/data/A_light.png"
           >
             <v-card-title>Lights</v-card-title>
           </v-img>
@@ -26,7 +26,7 @@
           </v-card-text>
 
           <v-card-actions>
-            <v-switch v-model="ex11" label="red" color="red" value="red" hide-details></v-switch>
+            <v-switch v-model="ex11" color="red" value="red" hide-details></v-switch>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -35,9 +35,9 @@
           <v-img
             class="white--text align-end"
             height="150"
-            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+            src="https://www2.macs.hw.ac.uk/~sl106/data/A_aircon.png"
           >
-            <v-card-title>Air Conditioner</v-card-title>
+            <!-- <v-card-title>Air Conditioner</v-card-title> -->
           </v-img>
 
           <!-- <v-card-subtitle class="pb-0">On</v-card-subtitle> -->
@@ -61,7 +61,7 @@
           <v-img
             class="white--text align-end"
             height="150"
-            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+            src="https://www2.macs.hw.ac.uk/~sl106/data/A_music.png"
           >
             <v-card-title>Music</v-card-title>
           </v-img>
@@ -73,7 +73,7 @@
           </v-card-text>
 
           <v-card-actions>
-            <v-switch v-model="ex11" label="red" color="red" value="red" hide-details></v-switch>
+            <v-switch v-model="ex11" color="red" value="red" hide-details></v-switch>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -82,7 +82,7 @@
           <v-img
             class="white--text align-end"
             height="150"
-            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+            src="https://www2.macs.hw.ac.uk/~sl106/data/A_alarm.png"
           >
             <v-card-title>Alarms</v-card-title>
           </v-img>
