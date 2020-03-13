@@ -17,16 +17,28 @@
             class="white--text align-end"
             height="150"
             src="https://www2.macs.hw.ac.uk/~sl106/data/A_light.png"
-          >
-            <v-card-title>Lights</v-card-title>
-          </v-img>
+          ></v-img>
 
           <v-card-text class="text--primary">
             <p class="text-uppercase headline font-weight-bold">{{lights}}</p>
           </v-card-text>
 
           <v-card-actions>
-            <v-switch v-model="ex11" color="red" value="red" hide-details></v-switch>
+            <v-radio-group row v-model="lights" :mandatory="false">
+              <v-radio label="ON" value="ON"></v-radio>
+              <v-radio label="OFF" value="OFF"></v-radio>
+            </v-radio-group>
+            <!-- <v-bottom-navigation v-model="bottomNav" shift>
+              <v-btn>
+                <span>ON</span>
+                <v-icon>mdi-lightbulb-on</v-icon>
+              </v-btn>
+
+              <v-btn>
+                <span>OFF</span>
+                <v-icon>mdi-lightbulb</v-icon>
+              </v-btn>
+            </v-bottom-navigation>-->
           </v-card-actions>
         </v-card>
       </v-col>
@@ -43,39 +55,51 @@
           <!-- <v-card-subtitle class="pb-0">On</v-card-subtitle> -->
 
           <v-card-text class="text--primary">
-            <p class="text-uppercase headline font-weight-bold">{{temp}}</p>
+            <p class="text-uppercase headline font-weight-bold">{{temp}}&deg;C</p>
           </v-card-text>
 
           <v-card-actions>
-            <v-btn class="mx-2" fab dark small color="primary">
+            <v-btn class="mx-2" @click="down()" fab dark small color="primary">
               <v-icon dark>mdi-minus</v-icon>
             </v-btn>
-            <v-btn class="mx-2" fab dark small color="indigo">
+            <v-btn class="mx-2" @click="up()" fab dark small color="indigo">
               <v-icon dark>mdi-plus</v-icon>
             </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
+      <!-- Music card -->
       <v-col md="3">
         <v-card class="mx-auto" max-width="300">
           <v-img
             class="white--text align-end"
             height="150"
             src="https://www2.macs.hw.ac.uk/~sl106/data/A_music.png"
-          >
-            <v-card-title>Music</v-card-title>
-          </v-img>
-
-          <!-- <v-card-subtitle class="pb-0">On</v-card-subtitle> -->
+          ></v-img>
 
           <v-card-text class="text--primary">
-            <p class="text-uppercase headline font-weight-bold">{{lights}}</p>
+            <p class="text-uppercase headline font-weight-bold">{{music}}</p>
           </v-card-text>
 
           <v-card-actions>
-            <v-switch v-model="ex11" color="red" value="red" hide-details></v-switch>
+            <!-- <v-radio-group row v-model="music" :mandatory="false">
+              <v-radio label="ON" value="ON"></v-radio>
+              <v-radio label="OFF" value="OFF"></v-radio>
+            </v-radio-group>-->
+            <v-bottom-navigation v-model="bottomNav" shift>
+              <v-btn>
+                <span>Video</span>
+                <v-icon>mdi-television-play</v-icon>
+              </v-btn>
+
+              <v-btn>
+                <span>Image</span>
+                <v-icon>mdi-image</v-icon>
+              </v-btn>
+            </v-bottom-navigation>
           </v-card-actions>
         </v-card>
+        <!-- Alarm card -->
       </v-col>
       <v-col md="3">
         <v-card class="mx-auto" max-width="300">
@@ -83,15 +107,11 @@
             class="white--text align-end"
             height="150"
             src="https://www2.macs.hw.ac.uk/~sl106/data/A_alarm.png"
-          >
-            <v-card-title>Alarms</v-card-title>
-          </v-img>
-
-          <!-- <v-card-subtitle class="pb-0">On</v-card-subtitle> -->
+          ></v-img>
 
           <v-card-text class="text--primary">
-            <p class="text-uppercase headline font-weight-bold">Everything Okay</p>
-            <p class="text-uppercase headline font-weight-bold">{{lights}}</p>
+            <p class="text-uppercase headline font-weight-bold">Fire and Security</p>
+            <p class="text-uppercase headline font-weight-light subtitle-1">Everything Okay</p>
           </v-card-text>
 
           <v-card-actions>
@@ -114,8 +134,9 @@ export default {
   },
   data() {
     return {
-      temp: 18.5,
-      lights: "on",
+      temp: 18,
+      lights: "ON",
+      music: "OFF",
       items: ["Living Room", "Bedroom1", "Bedroom2", "Bathroom", "Dining Room"],
       options: {
         text: "Welcome Home",
@@ -139,6 +160,12 @@ export default {
   methods: {
     drawing() {
       this.$refs.leon.drawing();
+    },
+    down() {
+      this.temp -= 1;
+    },
+    up() {
+      this.temp += 1;
     }
   }
 };

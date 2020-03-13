@@ -135,7 +135,7 @@
         <ct-card
           header-color="light-blue lighten-2"
           header-title="Energy Consumption by Devices"
-          header-text="Identy energy hungary devices"
+          header-text="Identify energy hungery devices"
         >
           <v-data-table :headers="headers" :items="byDevice.items" hide-default-footer />
         </ct-card>
@@ -324,7 +324,7 @@ export default {
     createLink() {
       return this.weatherAPI + this.location + this.unit + this.key;
     },
-    // increament device comsumption values
+    // increament device comsunmption values
     increment() {
       var index = Math.floor(Math.random() * this.byDevice.items.length);
       this.byDevice.items[index].consumption++;
