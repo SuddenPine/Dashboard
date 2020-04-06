@@ -3,13 +3,20 @@
   <v-container fluid class="content">
     <vue-leon ref="leon" :options="options" :controll="controll" class="leon-holder"></vue-leon>
     <v-row justify="center">
-      <!-- <v-col md="4">
-        <h2>Room Overview</h2>
-      </v-col>-->
+      <!-- room selection -->
       <v-col md="4">
-        <v-select :items="items" label="Select a room" solo></v-select>
+        <v-select
+          v-model="selectedRoom"
+          :items="items"
+          item-text="name"
+          label="Select a room"
+          solo
+          return-object
+          @change="room()"
+        ></v-select>
       </v-col>
     </v-row>
+    <!-- lights -->
     <v-row justify="space-between">
       <v-col md="3">
         <v-card class="mx-auto" max-width="300">
@@ -20,11 +27,11 @@
           ></v-img>
 
           <v-card-text class="text--primary">
-            <p class="text-uppercase headline font-weight-bold">{{lights}}</p>
+            <p class="text-uppercase headline font-weight-bold">{{light}}</p>
           </v-card-text>
 
           <v-card-actions>
-            <v-radio-group row v-model="lights" :mandatory="false">
+            <v-radio-group @change="lightChange()" row v-model="light" :mandatory="false">
               <v-radio label="ON" value="ON"></v-radio>
               <v-radio label="OFF" value="OFF"></v-radio>
             </v-radio-group>
@@ -42,6 +49,7 @@
           </v-card-actions>
         </v-card>
       </v-col>
+      <!-- aircon -->
       <v-col md="3">
         <v-card class="mx-auto" max-width="300">
           <v-img
@@ -56,6 +64,7 @@
 
           <v-card-text class="text--primary">
             <p class="text-uppercase headline font-weight-bold">{{temp}}&deg;C</p>
+            <p>{{selectedRoom}}</p>
           </v-card-text>
 
           <v-card-actions>
@@ -82,21 +91,10 @@
           </v-card-text>
 
           <v-card-actions>
-            <!-- <v-radio-group row v-model="music" :mandatory="false">
+            <v-radio-group @change="musicChange()" v-model="music" :mandatory="false">
               <v-radio label="ON" value="ON"></v-radio>
               <v-radio label="OFF" value="OFF"></v-radio>
-            </v-radio-group>-->
-            <v-bottom-navigation v-model="bottomNav" shift>
-              <v-btn>
-                <span>Video</span>
-                <v-icon>mdi-television-play</v-icon>
-              </v-btn>
-
-              <v-btn>
-                <span>Image</span>
-                <v-icon>mdi-image</v-icon>
-              </v-btn>
-            </v-bottom-navigation>
+            </v-radio-group>
           </v-card-actions>
         </v-card>
         <!-- Alarm card -->
@@ -134,10 +132,14 @@ export default {
   },
   data() {
     return {
-      temp: 18,
-      lights: "ON",
-      music: "OFF",
-      items: ["Living Room", "Bedroom1", "Bedroom2", "Bathroom", "Dining Room"],
+      selectedRoom: null,
+      temp: "",
+      light: "",
+      music: "",
+      items: [
+        { id: 1, name: "Living Room", light: "ON", music: "OFF", aircon: 20 },
+        { id: 2, name: "Bedroom1", light: "ON", music: "OFF", aircon: 18 }
+      ],
       options: {
         text: "Welcome Home",
         size: 170,
@@ -157,15 +159,29 @@ export default {
   mounted() {
     this.drawing();
   },
+  watch: {},
   methods: {
     drawing() {
       this.$refs.leon.drawing();
     },
     down() {
       this.temp -= 1;
+      this.selectedRoom.aircon = this.temp;
     },
     up() {
       this.temp += 1;
+      this.selectedRoom.aircon = this.temp;
+    },
+    room() {
+      this.light = this.selectedRoom.light;
+      this.music = this.selectedRoom.music;
+      this.temp = this.selectedRoom.aircon;
+    },
+    lightChange() {
+      this.selectedRoom.light = this.light;
+    },
+    musicChange() {
+      this.selectedRoom.music = this.music;
     }
   }
 };
