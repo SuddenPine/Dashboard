@@ -35,17 +35,27 @@
               <v-radio label="ON" value="ON"></v-radio>
               <v-radio label="OFF" value="OFF"></v-radio>
             </v-radio-group>
-            <!-- <v-bottom-navigation v-model="bottomNav" shift>
-              <v-btn>
-                <span>ON</span>
-                <v-icon>mdi-lightbulb-on</v-icon>
-              </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+      <!-- Music card -->
+      <v-col md="3">
+        <v-card class="mx-auto" max-width="300">
+          <v-img
+            class="white--text align-end"
+            height="150"
+            src="https://www2.macs.hw.ac.uk/~sl106/data/A_music.png"
+          ></v-img>
 
-              <v-btn>
-                <span>OFF</span>
-                <v-icon>mdi-lightbulb</v-icon>
-              </v-btn>
-            </v-bottom-navigation>-->
+          <v-card-text class="text--primary">
+            <p class="text-uppercase headline font-weight-bold">{{music}}</p>
+          </v-card-text>
+
+          <v-card-actions>
+            <v-radio-group row @change="musicChange()" v-model="music" :mandatory="false">
+              <v-radio label="ON" value="ON"></v-radio>
+              <v-radio label="OFF" value="OFF"></v-radio>
+            </v-radio-group>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -64,7 +74,6 @@
 
           <v-card-text class="text--primary">
             <p class="text-uppercase headline font-weight-bold">{{temp}}&deg;C</p>
-            <p>{{selectedRoom}}</p>
           </v-card-text>
 
           <v-card-actions>
@@ -77,28 +86,8 @@
           </v-card-actions>
         </v-card>
       </v-col>
-      <!-- Music card -->
-      <v-col md="3">
-        <v-card class="mx-auto" max-width="300">
-          <v-img
-            class="white--text align-end"
-            height="150"
-            src="https://www2.macs.hw.ac.uk/~sl106/data/A_music.png"
-          ></v-img>
 
-          <v-card-text class="text--primary">
-            <p class="text-uppercase headline font-weight-bold">{{music}}</p>
-          </v-card-text>
-
-          <v-card-actions>
-            <v-radio-group @change="musicChange()" v-model="music" :mandatory="false">
-              <v-radio label="ON" value="ON"></v-radio>
-              <v-radio label="OFF" value="OFF"></v-radio>
-            </v-radio-group>
-          </v-card-actions>
-        </v-card>
-        <!-- Alarm card -->
-      </v-col>
+      <!-- Alarm card -->
       <v-col md="3">
         <v-card class="mx-auto" max-width="300">
           <v-img
@@ -164,7 +153,7 @@ export default {
   },
   mounted() {
     this.drawing();
-    setInterval(() => this.deviceControl(), 10000);
+    setInterval(() => this.deviceControl(), 2000);
   },
   watch: {},
   methods: {
@@ -211,18 +200,34 @@ export default {
                 this.items[2].aircon = parseInt(data.degree);
                 this.room();
               }
-            } else if (data.control != null) {
+            } else if (data.device != null) {
               if (data.room == "kitchen") {
-                this.items[3].aircon += 1;
+                if (data.device == "light") {
+                  this.items[3].light = data.state.toUpperCase();
+                } else if (data.device == "music") {
+                  this.items[3].music = data.state.toUpperCase();
+                }
                 this.room();
               } else if (data.room == "living room") {
-                this.items[0].aircon = parseInt(data.degree);
+                if (data.device == "light") {
+                  this.items[0].light = data.state.toUpperCase();
+                } else if (data.device == "music") {
+                  this.items[0].music = data.state.toUpperCase();
+                }
                 this.room();
               } else if (data.room == "bedroom") {
-                this.items[1].aircon = parseInt(data.degree);
+                if (data.device == "light") {
+                  this.items[1].light = data.state.toUpperCase();
+                } else if (data.device == "music") {
+                  this.items[1].music = data.state.toUpperCase();
+                }
                 this.room();
               } else if (data.room == "bathroom") {
-                this.items[2].aircon = parseInt(data.degree);
+                if (data.device == "light") {
+                  this.items[2].light = data.state.toUpperCase();
+                } else if (data.device == "music") {
+                  this.items[2].music = data.state.toUpperCase();
+                }
                 this.room();
               }
             }
