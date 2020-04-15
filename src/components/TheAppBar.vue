@@ -3,22 +3,10 @@
     <v-btn v-if="responsive" dark icon @click.stop="onClick">
       <v-icon>mdi-view-list</v-icon>
     </v-btn>
-    <v-toolbar-title class="hidden-sm-and-down">
-      {{ title }}
-    </v-toolbar-title>
+    <v-toolbar-title class="hidden-sm-and-down">{{ title }}</v-toolbar-title>
     <v-spacer />
-    <v-text-field
-      class="mb-2"
-      color="purple secondary--text"
-      label="Search"
-      hide-details
-      style="max-width: 165px;"
-    />
+
     <div class="mx-3" />
-    <!-- Dashboard button -->
-    <v-btn text style="min-width: 0;">
-      <v-icon size="20">mdi-view-dashboard</v-icon>
-    </v-btn>
     <!-- Notification button -->
     <v-menu bottom left offset-y transition="slide-y-transition">
       <template v-slot:activator="{ attrs, on }">
@@ -27,20 +15,14 @@
             <template slot="badge">
               <span class="caption">{{ notifications.length }}</span>
             </template>
-            <v-icon>
-              mdi-bell
-            </v-icon>
+            <v-icon>mdi-bell</v-icon>
           </v-badge>
         </v-btn>
       </template>
 
       <v-card>
         <v-list dense>
-          <v-list-item
-            v-for="notification in notifications"
-            :key="notification"
-            @click="onClick"
-          >
+          <v-list-item v-for="notification in notifications" :key="notification" @click="onClick">
             <v-list-item-title v-text="notification" />
           </v-list-item>
         </v-list>
@@ -48,9 +30,7 @@
     </v-menu>
     <!-- Account button -->
     <v-btn text style="min-width: 0;" to="/user-profile">
-      <v-icon>
-        mdi-account
-      </v-icon>
+      <v-icon>mdi-account</v-icon>
     </v-btn>
   </v-app-bar>
 </template>
