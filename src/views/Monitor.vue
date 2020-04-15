@@ -132,13 +132,19 @@ export default {
   },
   data() {
     return {
+      monitorURL:
+        "https://du6981pgzi.execute-api.us-east-1.amazonaws.com/dev/deviceUpdate",
+      updatedURL:
+        "https://du6981pgzi.execute-api.us-east-1.amazonaws.com/dev/updated",
       selectedRoom: null,
-      temp: "",
-      light: "",
-      music: "",
+      temp: 20,
+      light: "ON",
+      music: "OFF",
       items: [
-        { id: 1, name: "Living Room", light: "ON", music: "OFF", aircon: 20 },
-        { id: 2, name: "Bedroom1", light: "ON", music: "OFF", aircon: 18 }
+        { id: 0, name: "Living Room", light: "ON", music: "OFF", aircon: 20 },
+        { id: 1, name: "Bedroom", light: "ON", music: "OFF", aircon: 18 },
+        { id: 2, name: "Bathroom", light: "ON", music: "OFF", aircon: 19 },
+        { id: 3, name: "Kitchen", light: "ON", music: "OFF", aircon: 13 }
       ],
       options: {
         text: "Welcome Home",
@@ -158,6 +164,7 @@ export default {
   },
   mounted() {
     this.drawing();
+    setInterval(() => this.deviceControl(), 10000);
   },
   watch: {},
   methods: {
@@ -182,6 +189,51 @@ export default {
     },
     musicChange() {
       this.selectedRoom.music = this.music;
+    },
+    deviceControl() {
+      axios
+        .get(this.monitorURL)
+        .then(response => {
+          console.log(response);
+          var data = response.data.device[0];
+          if (data != null) {
+            if (data.degree != null) {
+              if (data.room == "kitchen") {
+                this.items[3].aircon = parseInt(data.degree);
+                this.room();
+              } else if (data.room == "living room") {
+                this.items[0].aircon = parseInt(data.degree);
+                this.room();
+              } else if (data.room == "bedroom") {
+                this.items[1].aircon = parseInt(data.degree);
+                this.room();
+              } else if (data.room == "bathroom") {
+                this.items[2].aircon = parseInt(data.degree);
+                this.room();
+              }
+            } else if (data.control != null) {
+              if (data.room == "kitchen") {
+                this.items[3].aircon += 1;
+                this.room();
+              } else if (data.room == "living room") {
+                this.items[0].aircon = parseInt(data.degree);
+                this.room();
+              } else if (data.room == "bedroom") {
+                this.items[1].aircon = parseInt(data.degree);
+                this.room();
+              } else if (data.room == "bathroom") {
+                this.items[2].aircon = parseInt(data.degree);
+                this.room();
+              }
+            }
+            axios.post(this.updatedURL, { updated: true }).then(response => {
+              console.log(response);
+            });
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   }
 };
