@@ -6,13 +6,10 @@
     :src="image"
     mobile-break-point="991"
     width="260"
-    :expand-on-hover= false
+    :expand-on-hover="false"
   >
     <template v-slot:img="attrs">
-      <v-img
-        v-bind="attrs"
-        gradient="to top, rgba(0, 0, 0, .8), rgba(0, 0, 0, .8)"
-      />
+      <v-img v-bind="attrs" gradient="to top, rgba(0, 0, 0, .8), rgba(0, 0, 0, .8)" />
     </template>
     <v-list-item two-line>
       <v-list-item-avatar color="white">
@@ -23,9 +20,7 @@
         />
       </v-list-item-avatar>
 
-      <v-list-item-title class="title">
-        My Future Home
-      </v-list-item-title>
+      <v-list-item-title class="title">My Future Home</v-list-item-title>
     </v-list-item>
 
     <v-divider class="mb-3" />
@@ -72,11 +67,6 @@ export default {
         to: "/monitor",
         icon: "mdi-clipboard-outline",
         text: "Monitor"
-      },
-      {
-        to: "/league",
-        icon: "mdi-trophy",
-        text: "League"
       }
     ]
   }),
