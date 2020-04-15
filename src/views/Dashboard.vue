@@ -4,7 +4,8 @@
       <!-- Solar production card -->
       <v-col cols="12" sm="6" lg="3">
         <ct-stats-card
-          header-color="green"
+          header-color="yellow darken-1
+"
           header-icon="mdi-home-outline"
           header-title="Daily Solar Production"
           :header-value="dailystats.dailySolar + ' kWh'"
@@ -16,7 +17,9 @@
       <!-- Energy consumption card -->
       <v-col cols="12" sm="6" lg="3">
         <ct-stats-card
-          header-color="red"
+          header-color="orange darken-1
+
+"
           header-icon="mdi-information-outline"
           header-title="Daily Energy Consumption"
           :header-value="dailystats.dailyConS + ' kWh' "
@@ -28,7 +31,10 @@
       <!-- Battery card -->
       <v-col cols="12" sm="6" lg="3">
         <ct-stats-card
-          header-color="orange"
+          header-color="light-blue darken-1
+
+
+"
           :header-icon="getBattery()"
           header-title="Battery"
           :header-value="dailystats.dailyBattery + '%'"
@@ -43,7 +49,8 @@
       <!-- money saved card -->
       <v-col cols="12" sm="6" lg="3">
         <ct-stats-card
-          header-color="info"
+          header-color="red darken-1
+"
           header-icon="mdi-cash-usd"
           header-title="Money Saved Today"
           :header-value="'£' + dailystats.dailySave"
@@ -82,16 +89,17 @@
         <ct-chart-card
           :data="weeklyProd.data"
           :options="weeklyProd.options"
-          :responsive-options="dailyProductionChart.responsiveOptions"
-          chart-color="orange"
+          chart-color="deep-purple lighten-1
+"
           type="Bar"
         >
-          <h4 class="title font-weight-light">Weekly Solar Production (kW)</h4>
+          <h4 class="title font-weight-light">Weekly Consumption vs Production (kWh)</h4>
 
-          <p class="d-inline-flex font-weight-light mb-0">
+          <p class="category d-inline-flex font-weight-light mb-0">
+            <v-icon color="red" small>mdi-arrow-down</v-icon>
+            <span class="red--text">consumption (red)</span>&nbsp;
             <v-icon color="green" small>mdi-arrow-up</v-icon>
-            <span class="green--text">{{weeklyProd.percentage}}%</span>&nbsp; increase in solar
-            production this week
+            <span class="green--text">production (white)</span>&nbsp;
           </p>
 
           <template v-slot:actions>
@@ -103,24 +111,20 @@
         </ct-chart-card>
       </v-col>
 
-      <!-- Weekly Energy Consumption -->
+      <!-- daily Energy Consumption by room-->
       <v-col cols="12" lg="4">
         <ct-chart-card
-          :data="weeklyCons.data"
-          :options="weeklyCons.options"
-          chart-color="light-blue darken-1"
+          :data="byRoom.data"
+          :options="byRoom.options"
+          chart-color="indigo darken-1
+
+"
           type="Bar"
         >
-          <h3 class="title font-weight-light">Weekly Energy Consumption (kW)</h3>
-
-          <!-- <p class="d-inline-flex font-weight-light mb-0">
-            <v-icon color="green" small>mdi-emoticon-happy</v-icon>
-            &nbsp; consumption within normal parameter
-          </p>-->
+          <h3 class="title font-weight-light">Daily Energy Consumption by Room (kWh)</h3>
 
           <p class="d-inline-flex font-weight-light mb-0">
-            <v-icon color="red" small>mdi-arrow-up</v-icon>
-            <span class="red--text">{{weeklyCons.percentage}}%</span>&nbsp; increase in energy consumption this week
+            <v-icon color="green" small>mdi-emoticon-happy</v-icon>&nbsp; consumption within normal parameter
           </p>
 
           <template v-slot:actions>
@@ -133,7 +137,9 @@
       <!-- Energy hungrary devices -->
       <v-col cols="12" lg="6">
         <ct-card
-          header-color="light-blue lighten-2"
+          header-color="orange lighten-2
+
+"
           header-title="Energy Consumption by Devices"
           header-text="Identify energy hungery devices"
         >
@@ -141,20 +147,10 @@
         </ct-card>
       </v-col>
 
-      <!-- Energy consumption by room -->
-      <!-- <v-col cols="12" lg="6">
-        <ct-card
-          header-color="teal accent-3"
-          header-title="Energy Consumption by Devices"
-          header-text="Identy energy hungary devices"
-        >
-          <v-data-table :headers="headers" :items="items" hide-default-footer />
-        </ct-card>
-      </v-col>-->
-
       <!-- Environment card -->
       <v-col cols="12" lg="6">
-        <ct-card class="card-tabs" header-color="green">
+        <ct-card class="card-tabs" header-color="light-green lighten-1
+">
           <template v-slot:header>
             <v-tabs v-model="tabs" background-color="transparent" slider-color="white">
               <span class="subheading font-weight-light mx-3" style="align-self: center">FYI</span>
@@ -163,9 +159,6 @@
               </v-tab>
               <v-tab class="mr-3">
                 <v-icon class="mr-2">mdi-home</v-icon>Inside
-              </v-tab>
-              <v-tab>
-                <v-icon class="mr-2">mdi-cloud</v-icon>National Grid
               </v-tab>
             </v-tabs>
           </template>
@@ -206,45 +199,7 @@
               </v-card>
             </v-tab-item>
             <v-tab-item>
-              <h1>haha</h1>
-            </v-tab-item>
-
-            <!-- tab 3: national grid -->
-            <v-tab-item>
-              <v-card class="mx-auto" color="#26c6da" dark max-width="400">
-                <v-card-title>
-                  <v-icon large left>mdi-twitter</v-icon>
-                  <span class="title font-weight-light">Twitter</span>
-                </v-card-title>
-
-                <v-card-text class="headline font-weight-bold">
-                  To reach #NetZero by 2050 we'll need hundreds of thousands of
-                  people across the generations to join the energy sector and
-                  fill around 400K jobs. Find out more about how we think we can
-                  get there: http://ngrid.com/2O3qf8G #JobThatCantWait
-                  #NetZeroReady
-                </v-card-text>
-
-                <v-card-actions>
-                  <v-list-item class="grow">
-                    <v-list-item-avatar color="grey darken-3">
-                      <v-img class="elevation-6" src="http://www2.macs.hw.ac.uk/~sl106/data/ng.png"></v-img>
-                    </v-list-item-avatar>
-
-                    <v-list-item-content>
-                      <v-list-item-title>National Grid UK</v-list-item-title>
-                    </v-list-item-content>
-
-                    <v-row align="center" justify="end">
-                      <v-icon class="mr-1">mdi-heart</v-icon>
-                      <span class="subheading mr-2">256</span>
-                      <span class="mr-1">·</span>
-                      <v-icon class="mr-1">mdi-share-variant</v-icon>
-                      <span class="subheading">45</span>
-                    </v-row>
-                  </v-list-item>
-                </v-card-actions>
-              </v-card>
+              <v-data-table :headers="headers" :items="byDevice.items" hide-default-footer />
             </v-tab-item>
           </v-tabs-items>
         </ct-card>
@@ -265,7 +220,7 @@ export default {
         energyAPI.getDailyStats(),
         energyAPI.getWeeklyProd(),
         energyAPI.getDailyCompare(),
-        energyAPI.getWeeklyCons(),
+        energyAPI.getbyRoom(),
         energyAPI.getByDevice()
       ])
       .then(
@@ -273,7 +228,7 @@ export default {
           (this.dailystats = responses[0].data),
             (this.weeklyProd = responses[1].data),
             (this.dailyCompare = responses[2].data),
-            (this.weeklyCons = responses[3].data),
+            (this.byRoom = responses[3].data),
             (this.byDevice = responses[4].data);
           Axios.post(this.monitorURL, this.dailystats)
             .then(response => {
@@ -371,7 +326,7 @@ export default {
     return {
       dailystats: "",
       dailyCompare: "",
-      weeklyCons: "",
+      byRoom: "",
       weeklyProd: "",
       byDevice: "",
       wind: 0,

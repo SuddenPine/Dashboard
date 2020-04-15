@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const energyAPI = axios.create({
   baseURL: 'https://pbt3g11w0i.execute-api.us-east-1.amazonaws.com/dev/',
-  withCredentials:false,
+  withCredentials: false,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json'
@@ -11,22 +11,22 @@ const energyAPI = axios.create({
 
 export default {
   axios,
-  getPing(){
+  getPing() {
     return energyAPI.get('/ping')
   },
-  getDailyStats(){
+  getDailyStats() {
     return energyAPI.get('dailyStats')
   },
-  getDailyCompare(){
+  getDailyCompare() {
     return energyAPI.get('dailyCompare')
   },
-  getWeeklyCons(){
-    return energyAPI.get('weeklyCons')
+  getbyRoom() {
+    return energyAPI.get('byRoom')
   },
-  getWeeklyProd(){
+  getWeeklyProd() {
     return energyAPI.get('weeklyProd')
   },
-  getByDevice(){
+  getByDevice() {
     return energyAPI.get('byDevice')
   }
 }
