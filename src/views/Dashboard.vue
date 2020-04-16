@@ -199,7 +199,7 @@
               </v-card>
             </v-tab-item>
             <v-tab-item>
-              <v-data-table :headers="headers" :items="byDevice.items" hide-default-footer />
+              <v-data-table :headers="header2" :items="items2" hide-default-footer />
             </v-tab-item>
           </v-tabs-items>
         </ct-card>
@@ -375,6 +375,15 @@ export default {
           value: "consumption",
           align: "center"
         }
+      ],
+      header2: [
+        { sortable: false, text: "Name", value: "name" },
+        { sortable: false, text: "Value", value: "value" }
+      ],
+      items2: [
+        { name: "Temperature", value: "20°" },
+        { name: "Humidity", value: "13%" },
+        { name: "Carbon Dioxide", value: "Normal" }
       ],
       tabs: 0,
       list: {
