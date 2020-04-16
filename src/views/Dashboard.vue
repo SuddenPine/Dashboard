@@ -137,7 +137,7 @@
       <!-- Energy hungrary devices -->
       <v-col cols="12" lg="6">
         <ct-card
-          header-color="orange lighten-2
+          header-color="light-green lighten-1
 
 "
           header-title="Energy Consumption by Devices"
@@ -149,7 +149,7 @@
 
       <!-- Environment card -->
       <v-col cols="12" lg="6">
-        <ct-card class="card-tabs" header-color="light-green lighten-1
+        <ct-card class="card-tabs" header-color="pink lighten-3
 ">
           <template v-slot:header>
             <v-tabs v-model="tabs" background-color="transparent" slider-color="white">
@@ -282,7 +282,10 @@ export default {
     // increament device comsunmption values
     increment() {
       var index = Math.floor(Math.random() * this.byDevice.items.length);
-      this.byDevice.items[index].consumption++;
+      this.byDevice.items[index].consumption =
+        Math.round(
+          (this.byDevice.items[index].consumption + 0.01 + Number.EPSILON) * 100
+        ) / 100;
     },
     getBattery() {
       if (this.dailystats.dailyBattery <= 10) {
