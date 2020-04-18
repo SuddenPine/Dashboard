@@ -66,7 +66,7 @@
           chart-color="teal darken-2"
           type="Line"
         >
-          <h4 class="title font-weight-light">Daily Energy Consumption vs Production(kW)</h4>
+          <h4 class="title font-weight-light">Daily Energy Consumption vs Production(kWh)</h4>
 
           <p class="category d-inline-flex font-weight-light mb-0">
             <v-icon color="red" small>mdi-arrow-down</v-icon>
