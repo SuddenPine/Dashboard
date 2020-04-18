@@ -231,9 +231,9 @@ export default {
                 this.room();
               }
             }
-            axios.post(this.updatedURL, { updated: true }).then(response => {
-              console.log(response);
-            });
+            // axios.post(this.updatedURL, { updated: true }).then(response => {
+            //   console.log(response);
+            // });
           }
         })
         .catch(error => {
