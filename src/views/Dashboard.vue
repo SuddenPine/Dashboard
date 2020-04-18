@@ -230,7 +230,13 @@ export default {
             (this.dailyCompare = responses[2].data),
             (this.byRoom = responses[3].data),
             (this.byDevice = responses[4].data);
-          //
+          // Axios.post(this.monitorURL, this.dailystats)
+          //   .then(response => {
+          //     console.log(response);
+          //   })
+          //   .catch(error => {
+          //     console.log(error);
+          //   });
         })
       ),
       Axios.get(this.createLink()).then(response => {
